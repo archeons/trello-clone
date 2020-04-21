@@ -1,0 +1,46 @@
+{
+  "columns": [
+    {
+      "id": "1",
+      "name": "Backlog"
+    },
+    {
+      "id": "2",
+      "name": "In Progress"
+    },
+    {
+      "id": "3",
+      "name": "UAT"
+    },
+    {
+      "id": "4",
+      "name": "Done"
+    }
+  ],
+  "cards": [
+    {
+      "id": "1",
+      "name": "Build JS template",
+      "description": "To do after backend is done",
+      "columnId": "1"
+    },
+    {
+      "id": "2",
+      "name": "Develop Backend API",
+      "description": "Assigned to developer A",
+      "columnId": "2"
+    },
+    {
+      "id": "3",
+      "name": "Develop UX",
+      "description": "Assigned to developer B",
+      "columnId": "3"
+    },
+    {
+      "id": "4",
+      "name": "Documentation of Project",
+      "description": "Approved by PM",
+      "columnId": "4"
+    }
+  ]
+}

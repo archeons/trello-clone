@@ -1,0 +1,21 @@
+.character > img {
+    max-height: 100px;
+    grid-area: image;
+}
+
+#searchBar {
+    width: 10%;
+    height: 32px;
+    border-radius: 3px;
+    border: 1px solid #eaeaea;
+    padding: 5px 10px;
+    font-size: 12px;
+}
+
+#searchWrapper {
+    position: relative;
+}
+
+.pt-3-half {
+    padding: 1rem;
+}
