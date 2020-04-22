@@ -66,6 +66,9 @@ async function updateColumn(id) {
         body: JSON.stringify(jsonBody)
     }
     const res = await fetch(url, putMethod);
+    if(res.status == '200') {
+        window.location.reload();
+    }
 };
 
 async function removeCard(id, redirect) {
@@ -105,11 +108,90 @@ async function updateCard(id, card) {
         },
         body: JSON.stringify(jsonBody)
     }
-    console.log(putMethod);
     const res = await fetch(url, putMethod);
+    if(res.status == '200') {
+        window.location.reload();
+    }
 };
 
+async function addColumn() {
+    let name = 'column-new';
+    const columnName = document.getElementById(name).innerHTML;
+    let isValid = await validateColumnName(columnName);
+    console.log(isValid);
+    if(isValid) {
+        const url = columnListUrl;
+        var jsonBody = {
+            name: columnName
+        };
+        const putMethod = {
+            method: 'POST', 
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8' 
+            },
+            body: JSON.stringify(jsonBody)
+        }
+        const res = await fetch(url, putMethod);
+        if(res.status == '200') {
+            window.location.reload();
+        }
+    } else {
+        alert('Error: Duplicate Column Name!');
+    }
+};
+
+async function validateColumnName(name) {
+    const url = columnListUrl+'?name='+name;
+    const res = await fetch(url);
+    const json = await res.json();
+    if (json.length > 0) {
+        return false;
+    }
+    return true;
+}
+
+async function addCard(columnId) {
+    let cname = 'card-new-'+columnId;
+    const cardName = document.getElementById(cname).innerHTML;
+    let isValid = await validateCardName(columnId, cardName);
+    if(isValid) {
+        let dname = 'description-new-'+columnId;
+        const descriptionName = document.getElementById(dname).innerHTML;
+        const url = cardListUrl;
+        var jsonBody = {
+            name: cardName,
+            description: descriptionName,
+            columnId : columnId
+        };
+        const putMethod = {
+            method: 'POST', 
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8' 
+            },
+            body: JSON.stringify(jsonBody)
+        }
+        const res = await fetch(url, putMethod);
+        if(res.status == '200') {
+            window.location.reload();
+        }
+    } else {
+        alert('Error: Duplicate Card Name!');
+    }
+}
+
+async function validateCardName(columnId, name) {
+    const url = cardListUrl+'?name='+name+'&columnId='+columnId;
+    const res = await fetch(url);
+    const json = await res.json();
+    console.log(json);
+    if (json.length > 0) {
+        return false;
+    }
+    return true;
+}
+
 async function fetchList() {
+    // Column Start
     var currentUrl = document.URL;
     var query = currentUrl.split("?")[1];
     const res1 = await fetch(columnListUrl+'?'+query);
@@ -117,15 +199,16 @@ async function fetchList() {
     const main = document.querySelector('.column-list');
     json1.forEach(column => {
         const el = document.createElement('div');
+        el.setAttribute('id', `col-${column.id}`);
         el.setAttribute('class', 'col-sm draggable');
         el.setAttribute('contenteditable', true);
         el.innerHTML = '<span id="column-'+`${column.id}`+'">'+`${column.name}`+'</span>';
         
-        let addc = document.createElement('span');
-        addc.setAttribute('id', `${column.id}`);
-        addc.setAttribute('style', 'color:green; float:right;');
-        addc.setAttribute('class', 'fa fa-check-circle-o');
-        addc.onclick = function () {
+        let uc = document.createElement('span');
+        uc.setAttribute('id', `${column.id}`);
+        uc.setAttribute('style', 'color:green; float:right;');
+        uc.setAttribute('class', 'fa fa-check-circle-o');
+        uc.onclick = function () {
             updateColumn(this.id);
         };
         
@@ -140,79 +223,113 @@ async function fetchList() {
             } 
         };
         
-        el.appendChild(addc);
+        el.appendChild(uc);
         el.appendChild(rc);
         main.appendChild(el);
     })
+    const el = document.createElement('div');
+    el.setAttribute('class', 'col-sm draggable');
+    el.setAttribute('contenteditable', true);
+    el.innerHTML = '<span id="column-new">Add Column</span>';
     
+    let addc = document.createElement('span');
+    addc.setAttribute('style', 'color:green; float:right;');
+    addc.setAttribute('class', 'fa fa-check-circle-o');
+    addc.onclick = function () {
+        addColumn();
+    };
+    el.appendChild(addc);
+    main.appendChild(el);
+    // Column End
+
+    // Card Start
     const res2 = await fetch(cardListUrl+'?'+query);
     const json2 = await res2.json();
-    const sub = document.querySelector('.card-list');
-    // find the longest card no
-    var countList = [];
+    
+    // dynamic display for all cards and columns
     json2.forEach(card => {
-        if(typeof(countList[`${card.columnId}`]) === 'undefined') {
-            countList[`${card.columnId}`] = 1;
-        } else {
-            countList[`${card.columnId}`]++;
+        const sub = document.querySelector(`#col-${card.columnId}`);
+        const el = document.createElement('div');
+        el.setAttribute('class', 'card-list draggable');
+        el.setAttribute('contenteditable', true);
+        el.innerHTML = '<span id="card-'+`${card.id}`+'">'+`${card.name}`+'</span>';
+        let accordion = document.createElement('span');
+        accordion.setAttribute('id', `${card.id}`);
+        accordion.setAttribute('style', 'color:green; float:right;');
+        accordion.setAttribute('class', 'fa fa-arrow-down');
+        accordion.setAttribute('data-toggle', 'collapse');
+        accordion.setAttribute('data-target', `#description-${card.id}`);
+        
+        let uc = document.createElement('span');
+        uc.setAttribute('id', `${card.id}`);
+        uc.setAttribute('style', 'color:green; float:right;');
+        uc.setAttribute('class', 'fa fa-check-circle-o');
+        uc.onclick = function () {
+            updateCard(this.id, card);
+        };
+        
+        let rc = document.createElement('span');
+        rc.setAttribute('id', `${card.id}`);
+        rc.setAttribute('style', 'color:red; float:right;');
+        rc.setAttribute('class', 'fa fa-times-circle-o');
+        rc.onclick = function () {
+            var r = confirm("Are you sure to delete this card?");
+            if (r == true) {
+                removeCard(this.id, true);
+            } 
+        };
+        
+        let cardDescription = `${card.description}`;
+        let panel = document.createElement('div');
+        panel.setAttribute('id', `description-${card.id}`);
+        panel.setAttribute('class', 'collapse card-list');
+        panel.setAttribute('contenteditable', true);
+        if(cardDescription == '') {
+            cardDescription = 'NA';
         }
-    })
-    // TODO dynamic display for all cards and columns
-    var totalCards = Math.max(countList)*json1.length;
-    var counter = 1;
-    console.log(json2);
-    json2.forEach(card => {
-        if(`${card.columnId}` == counter) {
-            const el = document.createElement('div');
-            el.setAttribute('class', 'col-sm draggable');
-            el.setAttribute('contenteditable', true);
-            el.innerHTML = '<span id="card-'+`${card.id}`+'">'+`${card.name}`+'</span>';
-            let accordion = document.createElement('span');
-            accordion.setAttribute('id', `${card.id}`);
-            accordion.setAttribute('style', 'color:green; float:right;');
-            accordion.setAttribute('class', 'fa fa-arrow-down');
-            accordion.setAttribute('data-toggle', 'collapse');
-            accordion.setAttribute('data-target', `#description-${card.id}`);
-            
-            let addc = document.createElement('span');
-            addc.setAttribute('id', `${card.id}`);
-            addc.setAttribute('style', 'color:green; float:right;');
-            addc.setAttribute('class', 'fa fa-check-circle-o');
-            addc.onclick = function () {
-                updateCard(this.id, card);
-            };
-            
-            let rc = document.createElement('span');
-            rc.setAttribute('id', `${card.id}`);
-            rc.setAttribute('style', 'color:red; float:right;');
-            rc.setAttribute('class', 'fa fa-times-circle-o');
-            rc.onclick = function () {
-                var r = confirm("Are you sure to delete this card?");
-                if (r == true) {
-                    removeCard(this.id, true);
-                } 
-            };
-            
-            let panel = document.createElement('div');
-            panel.setAttribute('id', `description-${card.id}`);
-            panel.setAttribute('class', 'collapse');
-            panel.setAttribute('contenteditable', true);
-            panel.innerHTML = `${card.description}`;
+        panel.innerHTML = cardDescription;
 
-            el.appendChild(accordion);
-            el.appendChild(addc);
-            el.appendChild(rc);
-            el.appendChild(panel);
-            sub.appendChild(el);
-        } else {
-            const row = document.createElement('div');
-            const editableTable = document.querySelector('.table-editable');
-            row.setAttribute('class', 'row card-list');
-            editableTable.appendChild(row);
-        }
-        if(`${card.columnId}` % json1.length == 0) counter = 1;
-        counter++;
+        el.appendChild(accordion);
+        el.appendChild(uc);
+        el.appendChild(rc);
+        el.appendChild(panel);
+        sub.appendChild(el);
     })
+    // add new card
+    json1.forEach(column => {
+        const sub = document.querySelector(`#col-${column.id}`);
+        const el = document.createElement('div');
+        el.setAttribute('class', 'card-list draggable');
+        el.setAttribute('contenteditable', true);
+        el.innerHTML = `<span id="card-new-${column.id}">Add Card</span>`;
+        
+        let accordion = document.createElement('span');
+        accordion.setAttribute('style', 'color:green; float:right;');
+        accordion.setAttribute('class', 'fa fa-arrow-down');
+        accordion.setAttribute('data-toggle', 'collapse');
+        accordion.setAttribute('data-target', `#description-new-${column.id}`);
+        
+        let addc = document.createElement('span');
+        addc.setAttribute('id', `${column.id}`);
+        addc.setAttribute('style', 'color:green; float:right;');
+        addc.setAttribute('class', 'fa fa-check-circle-o');
+        addc.onclick = function () {
+            addCard(this.id);
+        };
+        
+        let cardDescription = 'Input Description';
+        let panel = document.createElement('div');
+        panel.setAttribute('id', `description-new-${column.id}`);
+        panel.setAttribute('class', 'collapse card-list');
+        panel.setAttribute('contenteditable', true);
+        panel.innerHTML = cardDescription;
+
+        el.appendChild(accordion);
+        el.appendChild(addc);
+        el.appendChild(panel);
+        sub.appendChild(el);
+    })
+    // Card End
 }
 
 // Accordion Start

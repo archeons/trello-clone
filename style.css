@@ -60,6 +60,11 @@
     background-color: white;
     overflow: hidden;
 }
+
+.card-list {
+    vertical-align:bottom;
+    border: 2px solid black;
+}
 /*
 #table {
     height: 100%;

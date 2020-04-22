@@ -20,13 +20,13 @@
   "cards": [
     {
       "id": "1",
-      "name": "Build JS template2",
+      "name": "Build JS temp",
       "description": "unassigned",
       "columnId": "1"
     },
     {
       "id": "2",
-      "name": "Develop Backend API2",
+      "name": "Backend API",
       "description": "Assigned to devedasda",
       "columnId": "2"
     },
