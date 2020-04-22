@@ -28,7 +28,11 @@ Command to start frontend
 Pre-requisites to run serve:
 - npm install -g serve
 
+Frontend Server
+- http://localhost:5000/
 
+Backend Server
+- http://localhost:3000/
 
 To run Unit Test
-
+- npm run test
