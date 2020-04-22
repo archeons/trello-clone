@@ -36,3 +36,16 @@ Backend Server
 
 To run Unit Test
 - npm run test
+
+## Authors
+
+* **Felixander Loetama** - *Initial work* - [archeons](https://github.com/archeons)
+
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+
+## Acknowledgments
+
+* This code is used for Maltem Consulting Group
