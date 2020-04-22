@@ -4,7 +4,7 @@
 }
 
 #searchBar {
-    width: 10%;
+    width: 20%;
     height: 32px;
     border-radius: 3px;
     border: 1px solid #eaeaea;
@@ -19,3 +19,87 @@
 .pt-3-half {
     padding: 1rem;
 }
+
+.body {
+    margin: 0 auto;
+    background: rgb(236, 232, 252);
+}
+
+.container {
+    padding: 1rem;
+    margin-top: 1rem;
+}
+
+.draggable {
+    padding: 1rem;
+    background-color: white;
+    border: 1px solid black;
+    cursor: move;
+}
+
+.col-sm > .draggable {
+    padding: 1rem;
+    background-color: white;
+    border: 1px solid black;
+    cursor: move;
+}
+
+.draggable.dragging {
+    opacity: 0.5;
+}
+
+.accordion {
+    cursor: pointer;
+    transition: 0.4s;
+}
+  
+  
+.panel {
+    padding: 0 18px;
+    display: none;
+    background-color: white;
+    overflow: hidden;
+}
+/*
+#table {
+    height: 100%;
+    width: 100%;
+}
+
+.table {
+    height: auto;
+    width: 384px;
+    max-width: 384px;
+    margin-top: 40px;
+    margin-left: 40px;
+    background-color: rgb(217, 247, 209);
+    border: 1px solid rgb(217, 247, 209);
+    border-radius: 8px;
+    box-sizing: border-box;
+    padding: 15px;   
+}
+
+.header {
+    height: 80px;
+    max-height: 80px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.table-name {
+    color: black;
+}
+
+.namechanger, #completer {
+    color: rgb(30, 38, 110);
+    font-size: 23px;
+}
+
+#table-name-input {
+    position: fixed;
+    width: 220px;
+    height: 30px;
+    font-size: 16px;
+}*/

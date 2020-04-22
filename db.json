@@ -2,7 +2,7 @@
   "columns": [
     {
       "id": "1",
-      "name": "Backlog"
+      "name": "lala2"
     },
     {
       "id": "2",
@@ -20,14 +20,14 @@
   "cards": [
     {
       "id": "1",
-      "name": "Build JS template",
-      "description": "To do after backend is done",
+      "name": "Build JS template2",
+      "description": "unassigned",
       "columnId": "1"
     },
     {
       "id": "2",
-      "name": "Develop Backend API",
-      "description": "Assigned to developer A",
+      "name": "Develop Backend API2",
+      "description": "Assigned to devedasda",
       "columnId": "2"
     },
     {
@@ -38,9 +38,15 @@
     },
     {
       "id": "4",
-      "name": "Documentation of Project",
-      "description": "Approved by PM",
+      "name": "Develop UX 2",
+      "description": "Assigned to developer C",
       "columnId": "4"
+    },
+    {
+      "id": "5",
+      "name": "Build Draggable",
+      "description": "",
+      "columnId": "1"
     }
   ]
 }

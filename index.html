@@ -8,35 +8,50 @@
     <title>Trello Clone</title>
     <meta name="robots" content="noindex, nofollow">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel=stylesheet href="./style.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">   
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <!-- Editable table -->
-    <div class="card">
+    
+    <!-- TODO: pretty table
+        <div class="tables">
+        <div class="table">
+            <div class="header">
+                <h3 id="main-table-name" style="cursor: default;" class="table-name">Default Name</h3>
+                <a onclick="saveTableNameChanges()" style="margin-left:200px; display:none;" href="#" id="completer"><i class="fa fa-check-circle-o"></i></a>
+                <a onclick="changeTableName()" href="#" id="namechanger" class="namechanger"><i class="fa fa-pencil-square-o"></i></a>
+                <input type="text" style="display: none;" id="table-name-input" name="table-name-input">
+            </div>
+        </div>
+    </div>   
+    <script src="./table-name.js"></script> -->
+
+    <div class="container">
         <h1>Trello Clone</h1>
         <div id="searchWrapper">
             <input type="text" name="searchBar" id="searchBar" placeholder="Search" />
+            <button type="button" id="submit" class="btn btn-primary">Submit</button>
         </div>
-        <div class="card-body">
-            <div id="table" class="table-editable">
-                <table class="table table-bordered table-responsive-md table-striped text-center">
-                    <tbody>
-                        <tr id="column-list">
-                        </tr>
-                        <!-- This is our clonable table line -->
-                        <tr id="card-list">
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+        <hr/>
+        <div id="table" class="table-editable">
+            <div class="row column-list"></div>
+            <dov class="row card-list"></dov>    
         </div>
     </div>
-    <!-- Editable table -->
+   
+    <div class="container">
+        <p class="draggable" draggable="true">1</p>
+        <p class="draggable" draggable="true">2</p>
+        <p class="draggable" draggable="true">3</p>
+        <p class="draggable" draggable="true">4</p>
+    </div>
+
     <script src="./index.js" type="module"></script>
 </body>
 
